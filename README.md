@@ -31,6 +31,8 @@ RUN poetry config virtualenvs.create false && poetry install
 # Run the app
 CMD ["python", "./your-script.py"]
 
+
+# poetry init # poetry env use /path/to/python # poetry shell
 # pip freeze | awk -F '==' '{print $1}' | xargs poetry add
 # poetry build # poetry publish # poetry show --tree
 
