@@ -10,7 +10,7 @@ This tutorial demonstrates how to use FastAPI, Redis, and Docker to build a simp
 - `Dockerfile`: This file contains the instructions to build a Docker image for the application.
 
 
-# Using Poetry in Docker
+<!-- # Using Poetry in Docker
 ## Dockerfile Example with Poetry:
 
 # Use an official Python runtime as a parent image
@@ -54,5 +54,5 @@ RUN conda env create -f environment.yml
 SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
 
 # Run the app
-CMD ["conda", "run", "-n", "myenv", "python", "./your-script.py"]
+CMD ["conda", "run", "-n", "myenv", "python", "./your-script.py"] -->
 
