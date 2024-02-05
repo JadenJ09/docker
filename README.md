@@ -108,13 +108,13 @@ docker network rm my-network
 ```
 
 ### In Container Usage
-Executing Commands Inside Containers: To execute a command inside a running container.
+- Executing Commands Inside Containers: To execute a command inside a running container.
 ```sh
 docker exec -it my-nginx bash
 ```
 This command opens a bash shell inside the my-nginx container.
 
-Executing Commands Using Images by Running Containers.
+- Executing Commands Using Images by Running Containers.
 ```sh
 docker run -it <image_name_or_id> <command>
 ```
@@ -141,6 +141,135 @@ docker run --name my-website-container -d -p 8080:80 my-website
 
 5. Your website should now be accessible at http://localhost:8080.
 This example demonstrates how to use Docker to easily deploy applications with dependencies, such as an NGINX web server, in a consistent and isolated environment.
+
+
+## Docker Compose CLI (V2)
+Docker Compose using YAML is useful to run multiple containers as services which are not too complicated.
+
+- Starting Services
+```sh
+docker compose up -d
+```
+This command is used to start your services defined in docker-compose. yml in detached mode.
+
+- Stopping and Removing Resources
+```sh
+docker compose down
+```
+Stops and removes containers, networks, and volumes created by docker compose up.
+
+- Building Services
+```sh
+docker compose build
+```
+Builds or rebuilds services defined in the Docker Compose file.
+
+- Viewing Logs
+```sh
+docker compose logs
+```
+View output from services.
+Use -f to follow the log output.
+
+- Executing Commands in Running Containers
+```sh
+docker compose exec <service_name> <command>
+```
+
+- Executes a command in a running service container. 
+For example, to open a bash session in a service named "web", you'd use.
+```sh
+docker compose exec web bash
+```
+
+- Stopping Services
+```sh
+docker compose stop
+```
+Stops running services without removing them.
+
+- Starting Stopped Services
+```sh
+docker compose start
+```
+Starts services that were previously stopped.
+
+- Example docker-compose.yml for Docker Compose V2
+The format of the docker-compose.yml file remains largely the same. Here's a simple example for reference.
+```yaml
+version: '3.9'  # specifies the Docker Compose version
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+```
+This configuration creates a simple web server using NGINX, mapping port 8080 on the host to port 80 in the container, and mounts the ./html directory to the NGINX document root.
+
+- Running the Example with Docker Compose V2
+To start the service defined in your docker-compose.yml, navigate to the directory containing the file and run:
+```sh
+docker compose up -d
+```
+### Setting Project Names
+In Docker Compose V2, you can specify a project name when you start up your services. The project name is used as a prefix for the network, volume, and container names. This is useful for distinguishing between different instances of the same service or for running multiple environments (like development and production) side by side.
+
+- Using --project-name:
+```sh
+docker compose --project-name myproject up -d
+```
+This command starts your services defined in docker-compose.yml in detached mode, with myproject as the project name prefix.
+
+- Using -p (shorthand for --project-name):
+```sh
+docker compose -p myproject up -d
+```
+This does the same as the previous command, setting the project name to myproject.
+
+### Listing All Running Compose Projects
+docker compose ls:
+```sh
+docker compose ls
+```
+This new command lists all the running Compose projects. It gives you an overview of the projects, including their names, the status of their services, and the path to their configuration files. It's particularly useful for managing multiple Compose deployments.
+
+### Copying Files between a Service Container and the Local Filesystem
+- docker compose cp:
+The docker compose cp command allows you to copy files to and from a container managed by Compose. It extends the functionality of docker cp to Compose services, providing a convenient way to transfer files without having to deal directly with container IDs.
+
+- Copying a file from the local filesystem to a container:
+```sh
+docker compose cp ./localfile.txt myservice:/path/in/container
+```
+This copies localfile.txt from the local filesystem to /path/in/container in the container running the service myservice.
+
+- Copying a file from a container to the local filesystem:
+```sh
+docker compose cp myservice:/path/in/container/remotefile.txt ./localdir
+```
+This copies remotefile.txt from /path/in/container in the myservice container to the local directory ./localdir.
+
+### Resource Limits
+
+### Environment Variables
+
+### Networking
+
+### Dependence
+
+### Volumes (named)
+
+### Restart Policy
+
+
+## Container Registries
+### Publish to Docker Hub
+1. Login to Docker Hub: docker login -u [username] -p [password]
+2. Tag the image previously built: docker tag my_image previous_image
+3. Push the image: docker push [organization/my_image:latest]
+4. Pull the image: docker pull [organization/my_image:latest]
 
 <!-- # Using Poetry in Docker
 ## Dockerfile Example with Poetry:
